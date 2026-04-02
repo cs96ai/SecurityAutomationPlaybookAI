@@ -381,20 +381,22 @@ async def agent_chat(request: AgentChatRequest):
 # Mount static files for the UI
 ui_dist_path = Path("/app/ui/dist")
 if ui_dist_path.exists():
+    # Mount assets directory for static files
     app.mount("/assets", StaticFiles(directory=str(ui_dist_path / "assets")), name="assets")
     
-    @app.get("/")
-    async def serve_spa():
+    # Root route to serve index.html
+    @app.get("/", include_in_schema=False)
+    async def serve_root():
         return FileResponse(str(ui_dist_path / "index.html"))
     
-    # Catch-all route for SPA - must be last
-    @app.api_route("/{full_path:path}", methods=["GET"], include_in_schema=False)
-    async def catch_all(full_path: str):
-        # Serve static files or SPA for non-API routes
+    # Catch-all route for SPA routing - serves index.html for any non-API path
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def serve_spa(full_path: str):
+        # Check if it's a static file
         file_path = ui_dist_path / full_path
         if file_path.exists() and file_path.is_file():
             return FileResponse(str(file_path))
-        # For SPA routing, return index.html for non-existent paths
+        # Otherwise return index.html for SPA routing
         return FileResponse(str(ui_dist_path / "index.html"))
 
 if __name__ == "__main__":
