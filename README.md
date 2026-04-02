@@ -1,8 +1,8 @@
-# McKesson Security Automation Platform
+# SecurityAutomationPlaybookAI
 
-A proof-of-concept security operations platform built to demonstrate end-to-end security automation across Azure, Kubernetes, and AI-assisted operations. The platform simulates two healthcare systems (HSPS and STAR), monitors them for security events in real time, and provides playbook-driven incident response through a modern Vue 3 SPA.
+A proof-of-concept security operations platform built to demonstrate end-to-end security automation and AI-assisted operations. The platform simulates two healthcare systems (HSPS and STAR), monitors them for security events in real time, and provides playbook-driven incident response through a modern Vue 3 SPA.
 
-> **Live Demo**: [mckessondemo-csutherland.azurewebsites.net](https://mckessondemo-csutherland.azurewebsites.net)
+**Deployed on Fly.io** - Runs in a single low-cost container using supervisord to manage both the API and UI services.
 
 ---
 
@@ -10,38 +10,36 @@ A proof-of-concept security operations platform built to demonstrate end-to-end 
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
-│                         Vue 3 SPA (Azure App Service)                │
+│                    Vue 3 SPA (Port 3000)                             │
 │  Dashboard · Playbooks · ChatOps · Kubernetes Monitor · CI/CD · ...  │
 └────────────────────────────┬─────────────────────────────────────────┘
                              │  REST / Bearer Token
                              ▼
 ┌──────────────────────────────────────────────────────────────────────┐
-│                   FastAPI Backend (Azure App Service)                 │
-│           14 read-only Azure endpoints · OpenAI ChatOps agent        │
-│         Read-only service principal · Kubernetes API access          │
-└────────────┬──────────────────────────────────┬──────────────────────┘
-             │                                  │
-             ▼                                  ▼
-┌────────────────────────────┐   ┌─────────────────────────────────────┐
-│     OpenAI GPT-4 API       │   │      Azure Kubernetes Service       │
-│  Natural language queries  │   │                                     │
-│  with security guardrails  │   │  ┌─────────────┐ ┌─────────────┐   │
-└────────────────────────────┘   │  │    HSPS     │ │    STAR     │   │
-                                 │  │  Namespace  │ │  Namespace  │   │
-                                 │  ├─────────────┤ ├─────────────┤   │
-                                 │  │ Database    │ │ Database    │   │
-                                 │  │ API         │ │ API         │   │
-                                 │  │ Web UI      │ │ Web UI      │   │
-                                 │  │ Sec Portal  │ │ Sec Portal  │   │
-                                 │  └─────────────┘ └─────────────┘   │
-                                 └──────────────┬──────────────────────┘
-                                                │
-                                                ▼
-                                 ┌─────────────────────────────────────┐
-                                 │  Azure Function (Timer Trigger)     │
-                                 │  Pod auto-shutdown every 5 min      │
-                                 │  Managed Identity auth to AKS       │
-                                 └─────────────────────────────────────┘
+│                   FastAPI Backend (Port 8000)                         │
+│           Simulated infrastructure data · OpenAI ChatOps agent       │
+│                    Security event simulator                          │
+└────────────┬─────────────────────────────────────────────────────────┘
+             │
+             ▼
+┌────────────────────────────┐
+│     OpenAI GPT-4 API       │
+│  Natural language queries  │
+│  with security guardrails  │
+└────────────────────────────┘
+
+                    ┌─────────────────────────────────────┐
+                    │  Simulated Healthcare Systems       │
+                    │  ┌─────────────┐ ┌─────────────┐   │
+                    │  │    HSPS     │ │    STAR     │   │
+                    │  ├─────────────┤ ├─────────────┤   │
+                    │  │ Database    │ │ Database    │   │
+                    │  │ API         │ │ API         │   │
+                    │  │ Web UI      │ │ Web UI      │   │
+                    │  └─────────────┘ └─────────────┘   │
+                    │  (Security events generated         │
+                    │   in-process by simulator)          │
+                    └─────────────────────────────────────┘
 ```
 
 ---
@@ -51,18 +49,17 @@ A proof-of-concept security operations platform built to demonstrate end-to-end 
 | Skill Area | Implementation |
 |---|---|
 | **Security Orchestration** | 12 automated playbooks (endpoint remediation, phishing response, SIEM enrichment, DLP, malware analysis, etc.) with execution tracking and success metrics |
-| **Kubernetes Security Monitoring** | Python simulators running in AKS that emit realistic security events (SQLi, XSS, privilege escalation, PHI exfiltration, prescription fraud) collected by a central Security Portal |
-| **AI-Assisted SecOps (ChatOps)** | GPT-4 integration with 4-layer security: client-side pattern detection, system prompt guardrails, backend auth, and Azure RBAC (Reader role). Violation counter auto-resets the session after 3 attempts |
-| **Azure Infrastructure** | AKS cluster, App Services, Azure Functions, Container Registry, managed identities, read-only service principals |
-| **Backend API Design** | FastAPI with 14 read-only Azure endpoints, bearer token auth, Kubernetes API access via AKS credential retrieval |
-| **Infrastructure Automation** | PowerShell deployment scripts, Azure Function timer triggers for pod lifecycle management, Docker containerization |
+| **Security Event Simulation** | Python simulators generating realistic security events (SQLi, XSS, privilege escalation, PHI exfiltration, prescription fraud) for HSPS and STAR healthcare systems |
+| **AI-Assisted SecOps (ChatOps)** | GPT-4 integration with security guardrails: client-side pattern detection, system prompt constraints, backend auth. Violation counter auto-resets the session after 3 attempts |
+| **Backend API Design** | FastAPI with simulated infrastructure endpoints, bearer token auth, real-time event generation |
+| **Deployment** | Single-container deployment using Docker and supervisord, optimized for Fly.io |
 | **Frontend Engineering** | Vue 3 + Composition API, Pinia state management, TailwindCSS, real-time event streaming, dark mode |
 
 ---
 
 ## Key Components
 
-### Security Automation UI (`McKesson_SecurityAutomation_UI/`)
+### Security Automation UI (`SecurityAutomation_UI/`)
 
 Vue 3 single-page application with 9 views:
 
@@ -76,7 +73,7 @@ Vue 3 single-page application with 9 views:
 - **Collaboration** -- Team coordination and knowledge base
 - **Settings** -- User profile, preferences, dark mode
 
-### Backend API (`McKesson_SecurityAutomation_API/`)
+### Backend API (`SecurityAutomation_API/`)
 
 Python FastAPI server providing:
 
@@ -85,7 +82,9 @@ Python FastAPI server providing:
 - **Authentication** -- Bearer token verification on all endpoints
 - **Azure SDK integration** -- `azure-identity`, `azure-mgmt-resource`, `azure-mgmt-containerservice`, `kubernetes` client
 
-### Simulated Healthcare Systems (`McKessonSimulatedApplications/`)
+> **Note:** This platform runs entirely in simulation mode, generating realistic security events and infrastructure data for demonstration purposes. No actual cloud resources are required.
+
+### Simulated Healthcare Systems (`SimulatedApplications/`)
 
 Two Dockerized systems deployed to AKS, each with 4 microservices:
 
@@ -93,11 +92,11 @@ Two Dockerized systems deployed to AKS, each with 4 microservices:
 
 **STAR (Pharmacy System)** -- Generates healthcare-specific events: prescription fraud, DEA verification failures, controlled substance access, insurance claim manipulation, PHI violations
 
-Each system includes:
-- Database simulator (connection monitoring, query analysis)
-- API simulator (request rate tracking, injection detection)
-- Web UI simulator (session tracking, XSS/CSRF/bot detection)
-- Security Portal (event aggregation, Prometheus metrics, web dashboard)
+Each system simulates:
+- Database events (connection monitoring, query analysis)
+- API events (request rate tracking, injection detection)
+- Web UI events (session tracking, XSS/CSRF/bot detection)
+- Security metrics (event aggregation, real-time statistics)
 
 ### ChatOps Security Model
 
@@ -128,71 +127,111 @@ Each system includes:
 | Layer | Technologies |
 |---|---|
 | **Frontend** | Vue 3, Vite, TailwindCSS, Pinia, Vue Router, Chart.js |
-| **Backend API** | Python, FastAPI, Uvicorn, Azure SDK, Kubernetes client |
-| **Simulators** | Python, FastAPI, Prometheus client, Docker |
-| **Infrastructure** | Azure App Service, AKS, Azure Functions, Azure Container Registry |
+| **Backend API** | Python, FastAPI, Uvicorn |
+| **Simulators** | Python (in-process event generation) |
+| **Deployment** | Docker, supervisord, Fly.io |
 | **AI** | OpenAI GPT-4 API |
-| **Automation** | PowerShell, Azure CLI, kubectl |
+| **Process Management** | supervisord |
 
 ---
 
 ## Project Structure
 
 ```
-McKesson_DevSecAutomation/
-├── McKesson_SecurityAutomation_UI/       # Vue 3 SPA
+SecurityAutomationPlaybookAI/
+├── SecurityAutomation_UI/       # Vue 3 SPA
 │   └── src/
 │       ├── views/                        # 9 page components
 │       ├── stores/                       # Pinia state (6 stores)
-│       ├── services/                     # Azure API + OpenAI clients
+│       ├── services/                     # API clients
 │       └── config/                       # Environment management
 │
-├── McKesson_SecurityAutomation_API/      # FastAPI backend
-│   ├── main.py                           # 14 Azure endpoints + agent
+├── SecurityAutomation_API/      # FastAPI backend
+│   ├── main.py                           # API endpoints + agent
+│   ├── simulator.py                      # Event generator
+│   ├── simulated_azure_data.json         # Mock infrastructure data
 │   └── requirements.txt
 │
-├── McKessonSimulatedApplications/
-│   ├── HSPS/                             # Healthcare Provider System
-│   │   ├── database-simulator/           # Python + Docker
-│   │   ├── api-simulator/               # Python + Docker
-│   │   ├── webui-simulator/             # Python + Docker
-│   │   ├── security-portal/             # Event aggregator
-│   │   └── kubernetes/                  # K8s manifests
-│   └── STAR/                             # Pharmacy System (same structure)
-│
-├── azure-function-pod-shutdown/          # Timer-triggered auto-shutdown
-│   └── PodShutdownTimer/
-│       ├── function.json                 # Cron: every 5 min
-│       └── run.ps1                       # Pod age check + scale-down
-│
-└── auto-shutdown-pods.ps1                # Manual shutdown script
+├── Dockerfile                            # Multi-stage Docker build
+├── supervisord.conf                      # Process manager config
+├── fly.toml                              # Fly.io deployment config
+└── .env.example                          # Environment variables template
 ```
 
 ---
 
 ## Running Locally
 
-**Prerequisites**: Azure CLI, kubectl, Node.js 18+, Python 3.11+, PowerShell 7+
+**Prerequisites**: Node.js 18+, Python 3.11+
+
+### Development Mode (separate processes)
 
 ```bash
-# Frontend
-cd McKesson_SecurityAutomation_UI
-npm install && npm run dev            # http://localhost:5173
-
-# Backend API
-cd McKesson_SecurityAutomation_API
+# Terminal 1: Backend API
+cd SecurityAutomation_API
 pip install -r requirements.txt
-python -m uvicorn main:app --port 8000
+cp ../.env.example .env
+python -m uvicorn main:app --port 8000 --reload
 
-# View simulated security events (requires AKS + port-forward)
-kubectl port-forward -n hsps svc/security-portal 8000:8000
+# Terminal 2: Frontend
+cd SecurityAutomation_UI
+npm install
+npm run dev            # http://localhost:5173
+```
+
+### Production Mode (Docker with supervisord)
+
+```bash
+# Build and run with Docker
+docker build -t security-automation .
+docker run -p 8000:8000 -p 3000:3000 \
+  -e BEARER_TOKEN=your-secret-token \
+  -e OPENAI_API_KEY=your-openai-key \
+  security-automation
+
+# Access the application
+# UI: http://localhost:3000
+# API: http://localhost:8000
+# API Health: http://localhost:8000/health
 ```
 
 ---
 
-## Additional Documentation
+## Deployment to Fly.io
 
-- [ChatOps Security Setup](CHATOPS-SECURITY-SETUP.md) -- Security layers, violation detection, and Azure service principal configuration
-- [ChatOps Azure Capabilities](CHATOPS-AZURE-CAPABILITIES.md) -- All 14 read-only Azure endpoints with query examples
-- [Azure Function Setup](AZURE-FUNCTION-SETUP-COMPLETE.md) -- Timer trigger deployment and managed identity configuration
-- [Auto-Shutdown](AUTO-SHUTDOWN-README.md) -- Pod lifecycle management details
+```bash
+# Install Fly CLI
+curl -L https://fly.io/install.sh | sh
+
+# Login to Fly.io
+fly auth login
+
+# Launch the app (first time)
+fly launch
+
+# Set environment variables
+fly secrets set BEARER_TOKEN=your-secret-token-123
+fly secrets set OPENAI_API_KEY=your-openai-api-key
+
+# Deploy
+fly deploy
+
+# View logs
+fly logs
+
+# Open the app
+fly open
+```
+
+## Environment Variables
+
+- `BEARER_TOKEN` - API authentication token (required)
+- `OPENAI_API_KEY` - OpenAI API key for ChatOps agent (optional)
+
+## Features
+
+- **Single Container Deployment** - Both API and UI run in one container using supervisord
+- **Low Cost** - Optimized for Fly.io's free tier with auto-stop/start
+- **No External Dependencies** - All data is simulated in-process
+- **Real-time Events** - Security event simulator generates realistic healthcare security incidents
+- **AI ChatOps** - Optional OpenAI integration for natural language infrastructure queries

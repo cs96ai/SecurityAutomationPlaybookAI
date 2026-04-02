@@ -1,0 +1,15 @@
+node_modules
+.git
+.gitignore
+*.md
+*.zip
+*.ps1
+SimulatedApplications
+SecurityAutomation_UI/node_modules
+SecurityAutomation_UI/dist
+SecurityAutomation_API/__pycache__
+SecurityAutomation_API/*.pyc
+SecurityAutomation_API/.env.production
+SecurityAutomation_API/main_old.py
+.vscode
+.idea

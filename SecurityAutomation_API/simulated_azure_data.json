@@ -1,0 +1,302 @@
+{
+  "get_aks_cluster_status": {
+    "name": "hsps-aks-cluster",
+    "location": "eastus",
+    "powerState": "Running",
+    "provisioningState": "Succeeded",
+    "kubernetesVersion": "1.33",
+    "nodeResourceGroup": "MC_hsps-demo-rg_hsps-aks-cluster_eastus",
+    "fqdn": "hsps-aks-c-hsps-demo-rg-3306e***.hcp.eastus.azmk8s.io",
+    "agentPoolProfiles": [
+      {
+        "name": "nodepool1",
+        "count": 3,
+        "vmSize": "Standard_B2s",
+        "osType": "Linux"
+      }
+    ]
+  },
+
+  "list_pods_hsps": {
+    "namespace": "hsps",
+    "pods": [
+      {"name": "hsps-database-simulator-7b9f4d6c8-x2k9m", "status": "Running", "ready": true, "restarts": 0, "age": "4d", "ip": "10.244.0.12"},
+      {"name": "hsps-database-simulator-7b9f4d6c8-p8n3j", "status": "Running", "ready": true, "restarts": 0, "age": "4d", "ip": "10.244.0.13"},
+      {"name": "hsps-api-simulator-5c8e7a2d1-q4w7r", "status": "Running", "ready": true, "restarts": 1, "age": "4d", "ip": "10.244.0.14"},
+      {"name": "hsps-api-simulator-5c8e7a2d1-m6t2v", "status": "Running", "ready": true, "restarts": 0, "age": "4d", "ip": "10.244.0.15"},
+      {"name": "hsps-api-simulator-5c8e7a2d1-k9j5n", "status": "Running", "ready": true, "restarts": 0, "age": "4d", "ip": "10.244.0.16"},
+      {"name": "hsps-webui-simulator-3a1d9f7e5-h8c4b", "status": "Running", "ready": true, "restarts": 0, "age": "4d", "ip": "10.244.0.17"},
+      {"name": "hsps-webui-simulator-3a1d9f7e5-w2x6z", "status": "Running", "ready": true, "restarts": 0, "age": "4d", "ip": "10.244.0.18"},
+      {"name": "security-portal-6d4b8e2a9-r7y3t", "status": "Running", "ready": true, "restarts": 0, "age": "4d", "ip": "10.244.0.19"}
+    ],
+    "count": 8
+  },
+
+  "list_pods_star": {
+    "namespace": "star",
+    "pods": [
+      {"name": "star-database-simulator-8c2e5f7a1-n4m6k", "status": "Running", "ready": true, "restarts": 0, "age": "4d", "ip": "10.244.1.20"},
+      {"name": "star-database-simulator-8c2e5f7a1-j9p3w", "status": "Running", "ready": true, "restarts": 2, "age": "4d", "ip": "10.244.1.21"},
+      {"name": "star-api-simulator-4d7a1c9e3-v5b8x", "status": "Running", "ready": true, "restarts": 0, "age": "4d", "ip": "10.244.1.22"},
+      {"name": "star-api-simulator-4d7a1c9e3-t2g6h", "status": "Running", "ready": true, "restarts": 0, "age": "4d", "ip": "10.244.1.23"},
+      {"name": "star-api-simulator-4d7a1c9e3-q8r1y", "status": "Running", "ready": true, "restarts": 0, "age": "4d", "ip": "10.244.1.24"},
+      {"name": "star-webui-simulator-2f6b3d8c0-s7k4n", "status": "Running", "ready": true, "restarts": 0, "age": "4d", "ip": "10.244.1.25"},
+      {"name": "star-webui-simulator-2f6b3d8c0-e1w9m", "status": "Running", "ready": true, "restarts": 0, "age": "4d", "ip": "10.244.1.26"},
+      {"name": "star-security-portal-9a3c7e1d5-f6j2p", "status": "Running", "ready": true, "restarts": 0, "age": "4d", "ip": "10.244.1.27"}
+    ],
+    "count": 8
+  },
+
+  "get_pod_details": {
+    "hsps-database-simulator-7b9f4d6c8-x2k9m": {
+      "name": "hsps-database-simulator-7b9f4d6c8-x2k9m",
+      "namespace": "hsps",
+      "status": "Running",
+      "ip": "10.244.0.12",
+      "node": "aks-nodepool1-31674829-vmss000000",
+      "creationTimestamp": "2026-02-03T14:22:10Z",
+      "labels": {"app": "hsps-database-simulator", "pod-template-hash": "7b9f4d6c8"},
+      "containers": [
+        {"name": "database-simulator", "image": "hspsacr.azurecr.io/hsps-database-simulator:latest", "ports": [{"containerPort": 8080, "protocol": "TCP"}]}
+      ],
+      "conditions": [{"type": "Ready", "status": "True"}, {"type": "ContainersReady", "status": "True"}, {"type": "PodScheduled", "status": "True"}]
+    },
+    "hsps-api-simulator-5c8e7a2d1-q4w7r": {
+      "name": "hsps-api-simulator-5c8e7a2d1-q4w7r",
+      "namespace": "hsps",
+      "status": "Running",
+      "ip": "10.244.0.14",
+      "node": "aks-nodepool1-31674829-vmss000001",
+      "creationTimestamp": "2026-02-03T14:22:15Z",
+      "labels": {"app": "hsps-api-simulator", "pod-template-hash": "5c8e7a2d1"},
+      "containers": [
+        {"name": "api-simulator", "image": "hspsacr.azurecr.io/hsps-api-simulator:latest", "ports": [{"containerPort": 8080, "protocol": "TCP"}]}
+      ],
+      "conditions": [{"type": "Ready", "status": "True"}, {"type": "ContainersReady", "status": "True"}, {"type": "PodScheduled", "status": "True"}]
+    },
+    "security-portal-6d4b8e2a9-r7y3t": {
+      "name": "security-portal-6d4b8e2a9-r7y3t",
+      "namespace": "hsps",
+      "status": "Running",
+      "ip": "10.244.0.19",
+      "node": "aks-nodepool1-31674829-vmss000002",
+      "creationTimestamp": "2026-02-03T14:22:20Z",
+      "labels": {"app": "security-portal", "pod-template-hash": "6d4b8e2a9"},
+      "containers": [
+        {"name": "security-portal", "image": "hspsacr.azurecr.io/security-portal:latest", "ports": [{"containerPort": 8000, "protocol": "TCP"}]}
+      ],
+      "conditions": [{"type": "Ready", "status": "True"}, {"type": "ContainersReady", "status": "True"}, {"type": "PodScheduled", "status": "True"}]
+    },
+    "star-database-simulator-8c2e5f7a1-j9p3w": {
+      "name": "star-database-simulator-8c2e5f7a1-j9p3w",
+      "namespace": "star",
+      "status": "Running",
+      "ip": "10.244.1.21",
+      "node": "aks-nodepool1-31674829-vmss000001",
+      "creationTimestamp": "2026-02-03T14:23:05Z",
+      "labels": {"app": "star-database-simulator", "pod-template-hash": "8c2e5f7a1"},
+      "containers": [
+        {"name": "database-simulator", "image": "hspsacr.azurecr.io/star-database-simulator:latest", "ports": [{"containerPort": 8080, "protocol": "TCP"}]}
+      ],
+      "conditions": [{"type": "Ready", "status": "True"}, {"type": "ContainersReady", "status": "True"}, {"type": "PodScheduled", "status": "True"}]
+    }
+  },
+
+  "get_resource_group_info": {
+    "name": "hsps-demo-rg",
+    "location": "eastus",
+    "provisioningState": "Succeeded",
+    "tags": {"environment": "demo", "project": "SecurityAutomationPlaybookAI", "owner": "cs96ai"}
+  },
+
+  "list_all_resources": {
+    "resourceGroup": "hsps-demo-rg",
+    "resources": [
+      {"name": "hsps-aks-cluster", "type": "Microsoft.ContainerService/managedClusters", "location": "eastus", "id": "/subscriptions/3306e***/resourcegroups/hsps-demo-rg/providers/Microsoft.ContainerService/managedClusters/hsps-aks-cluster"},
+      {"name": "security-automation-ui", "type": "Microsoft.Web/sites", "location": "eastus", "id": "/subscriptions/3306e***/resourcegroups/hsps-demo-rg/providers/Microsoft.Web/sites/mckessondemo-csutherland"},
+      {"name": "security-automation-api", "type": "Microsoft.Web/sites", "location": "eastus", "id": "/subscriptions/3306e***/resourcegroups/hsps-demo-rg/providers/Microsoft.Web/sites/mckessondemo-api"},
+      {"name": "hsps-pod-shutdown", "type": "Microsoft.Web/sites", "location": "eastus", "id": "/subscriptions/3306e***/resourcegroups/hsps-demo-rg/providers/Microsoft.Web/sites/hsps-pod-shutdown"},
+      {"name": "hspspodshutdown", "type": "Microsoft.Storage/storageAccounts", "location": "eastus", "id": "/subscriptions/3306e***/resourcegroups/hsps-demo-rg/providers/Microsoft.Storage/storageAccounts/hspspodshutdown"},
+      {"name": "hsps-demo-rg-asp", "type": "Microsoft.Web/serverFarms", "location": "eastus", "id": "/subscriptions/3306e***/resourcegroups/hsps-demo-rg/providers/Microsoft.Web/serverFarms/hsps-demo-rg-asp"},
+      {"name": "hsps-demo-rg-function-asp", "type": "Microsoft.Web/serverFarms", "location": "eastus", "id": "/subscriptions/3306e***/resourcegroups/hsps-demo-rg/providers/Microsoft.Web/serverFarms/hsps-demo-rg-function-asp"},
+      {"name": "hsps-demo-rg-vnet", "type": "Microsoft.Network/virtualNetworks", "location": "eastus", "id": "/subscriptions/3306e***/resourcegroups/hsps-demo-rg/providers/Microsoft.Network/virtualNetworks/hsps-demo-rg-vnet"},
+      {"name": "hsps-demo-rg-nsg", "type": "Microsoft.Network/networkSecurityGroups", "location": "eastus", "id": "/subscriptions/3306e***/resourcegroups/hsps-demo-rg/providers/Microsoft.Network/networkSecurityGroups/hsps-demo-rg-nsg"},
+      {"name": "hsps-demo-rg-loganalytics", "type": "Microsoft.OperationalInsights/workspaces", "location": "eastus", "id": "/subscriptions/3306e***/resourcegroups/hsps-demo-rg/providers/Microsoft.OperationalInsights/workspaces/hsps-demo-rg-loganalytics"}
+    ],
+    "count": 10
+  },
+
+  "get_app_service_status": {
+    "security-automation-ui": {
+      "name": "security-automation-ui",
+      "state": "Running",
+      "hostNames": ["security-automation-ui.azurewebsites.net"],
+      "location": "East US",
+      "kind": "app,linux",
+      "httpsOnly": true,
+      "defaultHostName": "security-automation-ui.azurewebsites.net"
+    },
+    "security-automation-api": {
+      "name": "security-automation-api",
+      "state": "Running",
+      "hostNames": ["security-automation-api.azurewebsites.net"],
+      "location": "East US",
+      "kind": "app,linux",
+      "httpsOnly": true,
+      "defaultHostName": "security-automation-api.azurewebsites.net"
+    }
+  },
+
+  "get_function_app_status": {
+    "hsps-pod-shutdown": {
+      "name": "hsps-pod-shutdown",
+      "state": "Running",
+      "hostNames": ["hsps-pod-shutdown.azurewebsites.net"],
+      "location": "East US",
+      "kind": "functionapp,linux",
+      "defaultHostName": "hsps-pod-shutdown.azurewebsites.net"
+    }
+  },
+
+  "get_storage_account_info": {
+    "hspspodshutdown": {
+      "name": "hspspodshutdown",
+      "location": "eastus",
+      "sku": {"name": "Standard_LRS", "tier": "Standard"},
+      "kind": "StorageV2",
+      "provisioningState": "Succeeded",
+      "primaryEndpoints": {
+        "blob": "https://hspspodshutdown.blob.core.windows.net/"
+      }
+    }
+  },
+
+  "get_aks_node_pools": {
+    "nodePools": [
+      {
+        "name": "nodepool1",
+        "count": 3,
+        "vmSize": "Standard_B2s",
+        "osType": "Linux",
+        "provisioningState": "Succeeded",
+        "powerState": "Running"
+      }
+    ],
+    "count": 1
+  },
+
+  "get_deployments_hsps": {
+    "namespace": "hsps",
+    "deployments": [
+      {"name": "hsps-database-simulator", "replicas": 2, "availableReplicas": 2, "readyReplicas": 2, "updatedReplicas": 2},
+      {"name": "hsps-api-simulator", "replicas": 3, "availableReplicas": 3, "readyReplicas": 3, "updatedReplicas": 3},
+      {"name": "hsps-webui-simulator", "replicas": 2, "availableReplicas": 2, "readyReplicas": 2, "updatedReplicas": 2},
+      {"name": "security-portal", "replicas": 1, "availableReplicas": 1, "readyReplicas": 1, "updatedReplicas": 1}
+    ],
+    "count": 4
+  },
+
+  "get_deployments_star": {
+    "namespace": "star",
+    "deployments": [
+      {"name": "star-database-simulator", "replicas": 2, "availableReplicas": 2, "readyReplicas": 2, "updatedReplicas": 2},
+      {"name": "star-api-simulator", "replicas": 3, "availableReplicas": 3, "readyReplicas": 3, "updatedReplicas": 3},
+      {"name": "star-webui-simulator", "replicas": 2, "availableReplicas": 2, "readyReplicas": 2, "updatedReplicas": 2},
+      {"name": "star-security-portal", "replicas": 1, "availableReplicas": 1, "readyReplicas": 1, "updatedReplicas": 1}
+    ],
+    "count": 4
+  },
+
+  "get_services_hsps": {
+    "namespace": "hsps",
+    "services": [
+      {"name": "hsps-database-simulator", "type": "ClusterIP", "clusterIP": "10.0.45.12", "ports": [{"port": 8080, "targetPort": "8080", "protocol": "TCP"}]},
+      {"name": "hsps-api-simulator", "type": "ClusterIP", "clusterIP": "10.0.78.34", "ports": [{"port": 8080, "targetPort": "8080", "protocol": "TCP"}]},
+      {"name": "hsps-webui-simulator", "type": "ClusterIP", "clusterIP": "10.0.112.56", "ports": [{"port": 8080, "targetPort": "8080", "protocol": "TCP"}]},
+      {"name": "security-portal", "type": "ClusterIP", "clusterIP": "10.0.156.78", "ports": [{"port": 8000, "targetPort": "8000", "protocol": "TCP"}]}
+    ],
+    "count": 4
+  },
+
+  "get_services_star": {
+    "namespace": "star",
+    "services": [
+      {"name": "star-database-simulator", "type": "ClusterIP", "clusterIP": "10.0.201.12", "ports": [{"port": 8080, "targetPort": "8080", "protocol": "TCP"}]},
+      {"name": "star-api-simulator", "type": "ClusterIP", "clusterIP": "10.0.215.34", "ports": [{"port": 8080, "targetPort": "8080", "protocol": "TCP"}]},
+      {"name": "star-webui-simulator", "type": "ClusterIP", "clusterIP": "10.0.230.56", "ports": [{"port": 8080, "targetPort": "8080", "protocol": "TCP"}]},
+      {"name": "star-security-portal", "type": "ClusterIP", "clusterIP": "10.0.245.78", "ports": [{"port": 8000, "targetPort": "8000", "protocol": "TCP"}]}
+    ],
+    "count": 4
+  },
+
+  "get_pod_logs": {
+    "hsps-database-simulator-7b9f4d6c8-x2k9m": {
+      "podName": "hsps-database-simulator-7b9f4d6c8-x2k9m",
+      "namespace": "hsps",
+      "logs": [
+        "2026-02-07T14:00:01Z INFO  Starting HSPS Database Security Simulator v2.1.0",
+        "2026-02-07T14:00:02Z INFO  Connected to security-portal at http://security-portal:8000",
+        "2026-02-07T14:00:02Z INFO  Registered as hsps-database-simulator with portal",
+        "2026-02-07T14:00:05Z INFO  Generated event: auth_failure (severity: medium)",
+        "2026-02-07T14:00:08Z INFO  Generated event: sql_injection (severity: high)",
+        "2026-02-07T14:00:12Z INFO  Generated event: connection_spike (severity: medium)",
+        "2026-02-07T14:00:15Z INFO  Generated event: brute_force_attack (severity: high)",
+        "2026-02-07T14:00:18Z INFO  Generated event: unusual_query_pattern (severity: medium)",
+        "2026-02-07T14:00:22Z INFO  Generated event: data_exfiltration (severity: critical)",
+        "2026-02-07T14:00:25Z INFO  Generated event: privilege_escalation (severity: high)",
+        "2026-02-07T14:00:28Z INFO  Health check: OK (events_sent=7, uptime=27s)"
+      ]
+    },
+    "security-portal-6d4b8e2a9-r7y3t": {
+      "podName": "security-portal-6d4b8e2a9-r7y3t",
+      "namespace": "hsps",
+      "logs": [
+        "2026-02-07T14:00:00Z INFO  Starting Security Portal v1.0.0",
+        "2026-02-07T14:00:01Z INFO  Listening on 0.0.0.0:8000",
+        "2026-02-07T14:00:02Z INFO  Application registered: hsps-database-simulator (database)",
+        "2026-02-07T14:00:03Z INFO  Application registered: hsps-api-simulator (api)",
+        "2026-02-07T14:00:04Z INFO  Application registered: hsps-webui-simulator (webui)",
+        "2026-02-07T14:00:05Z INFO  Receiving events from 3 applications",
+        "2026-02-07T14:00:10Z INFO  Events received: 12 (critical: 2, high: 4, medium: 4, low: 2)",
+        "2026-02-07T14:00:15Z INFO  Events received: 28 (critical: 5, high: 9, medium: 10, low: 4)",
+        "2026-02-07T14:00:20Z INFO  Prometheus metrics exported at /metrics",
+        "2026-02-07T14:00:25Z INFO  Health check: OK (total_events=45, apps_registered=3)"
+      ]
+    },
+    "star-database-simulator-8c2e5f7a1-j9p3w": {
+      "podName": "star-database-simulator-8c2e5f7a1-j9p3w",
+      "namespace": "star",
+      "logs": [
+        "2026-02-07T14:00:01Z INFO  Starting STAR Database Security Simulator v2.1.0",
+        "2026-02-07T14:00:02Z INFO  Connected to star-security-portal at http://star-security-portal:8000",
+        "2026-02-07T14:00:02Z INFO  Registered as star-database-simulator with portal",
+        "2026-02-07T14:00:05Z INFO  Generated event: prescription_data_access (severity: high)",
+        "2026-02-07T14:00:08Z INFO  Generated event: controlled_substance_query (severity: medium)",
+        "2026-02-07T14:00:12Z INFO  Generated event: patient_phi_exfiltration (severity: critical)",
+        "2026-02-07T14:00:15Z WARN  Pod restarted (restart count: 2) - OOMKilled",
+        "2026-02-07T14:00:18Z INFO  Recovery complete, resuming event generation",
+        "2026-02-07T14:00:22Z INFO  Generated event: dea_number_access (severity: high)",
+        "2026-02-07T14:00:25Z INFO  Health check: OK (events_sent=5, uptime=24s)"
+      ]
+    }
+  },
+
+  "get_subscription_info": {
+    "displayName": "Pay-As-You-Go",
+    "state": "Enabled",
+    "subscriptionId": "3306e***********************************"
+  },
+
+  "get_cost_analysis": {
+    "period": "Last 30 days",
+    "totalCost": "$127.45",
+    "breakdown": [
+      {"service": "Azure Kubernetes Service", "cost": "$45.20"},
+      {"service": "App Service", "cost": "$32.10"},
+      {"service": "Function App", "cost": "$15.80"},
+      {"service": "Storage Account", "cost": "$12.35"},
+      {"service": "Other", "cost": "$22.00"}
+    ],
+    "note": "Cost data is simulated. Enable Cost Management API for real data."
+  }
+}

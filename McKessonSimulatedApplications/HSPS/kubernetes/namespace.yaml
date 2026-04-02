@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: hsps
-  labels:
-    name: hsps
-    environment: demo
-    project: mckesson-hsps
